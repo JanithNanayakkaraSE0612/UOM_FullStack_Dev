@@ -26,7 +26,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             timeStamp text
             )`, (err) => {
             if (err) {
-                // Table already created
+                console.log('Something Error')
             } else {
                 // Table just created, creating some rows
             

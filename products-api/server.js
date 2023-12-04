@@ -13,8 +13,6 @@ app.use(cors({
     origin: '*'
 }));
 
-
-
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%", HTTP_PORT))
@@ -43,30 +41,36 @@ app.post("/api/customer/register/", (req, res, next) => {
             timeStamp
         } = req.body;
 
-        var sql = 'INSERT INTO customer (name, address, email, dateOfBirth, gender, , cardHolderName,cardNumber , expiryDate, cvv,timeStamp) VALUES (?,?,?,?,?,?,?,?,?,?)'
+        const emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        const creditCardRegEx = /^\d[12]$/;
+
+        if(emailRegEx.test(email)!=true){
+            res.status(400).send("Invalid Email Address");
+            return;
+        }
+        if(creditCardRegEx.test(cardNumber)!=true){
+            res.status(400).send("Invalid Card Number");
+            return;
+        }
+        var sql = 'INSERT INTO customer (name, address, email, dateOfBirth, gender,age , cardHolderName,cardNumber , expiryDate, cvv,timeStamp) VALUES (?,?,?,?,?,?,?,?,?,?,?)'
         var params = [name, address, email, dateOfBirth, gender, age, cardHolderName, cardNumber, expiryDate, cvv,timeStamp]
-        db.run(sql, params, function (err, result) {age
+        db.run(sql, params, function (err, result) {
 
             if (err) {
                 res.status(400).json({ "error": err.message })
                 return;
             } else {
-                res.json({
-                    "message": "success",
-                    "data": req.body,
-                    "id": this.lastID
+                res.status(201).json({
+                    "message": "customer "+name+" has registered",
+                    "customerid": this.lastID
                 })
-            }
+            } 
 
         });
     } catch (E) {
         res.status(400).send(E);
     }
 });
-
-
-
-
 
 // Root path
 app.get("/", (req, res, next) => {
