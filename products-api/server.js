@@ -43,9 +43,9 @@ app.post("/api/customer/register/", (req, res, next) => {
             timeStamp
         } = req.body;
 
-        var sql = 'INSERT INTO products (productName, description, category, brand, expiredDate, manufacturedDate, batchNumber, unitPrice, quantity, createdDate) VALUES (?,?,?,?,?,?,?,?,?,?)'
-        var params = [productName, description, category, brand, expiredDate, manufacturedDate, batchNumber, unitPrice, quantity, createdDate]
-        db.run(sql, params, function (err, result) {
+        var sql = 'INSERT INTO customer (name, address, email, dateOfBirth, gender, , cardHolderName,cardNumber , expiryDate, cvv,timeStamp) VALUES (?,?,?,?,?,?,?,?,?,?)'
+        var params = [name, address, email, dateOfBirth, gender, age, cardHolderName, cardNumber, expiryDate, cvv,timeStamp]
+        db.run(sql, params, function (err, result) {age
 
             if (err) {
                 res.status(400).json({ "error": err.message })
