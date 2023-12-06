@@ -42,16 +42,17 @@ app.post("/api/customer/register/", (req, res, next) => {
         } = req.body;
 
         const emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        const creditCardRegEx = /^\d[12]$/;
+        const creditCardRegEx = /^4[0-9]{12}(?:[0-9]{3})?$/;
+        ;
 
         if(emailRegEx.test(email)!=true){
             res.status(400).send("Invalid Email Address");
             return;
         }
-        // if(creditCardRegEx.test(cardNumber)!=true){
-        //     res.status(400).send("Invalid Card Number");
-        //     return;
-        // }
+        if(creditCardRegEx.test(cardNumber)!=true){
+            res.status(400).send("Invalid Card Number");
+            return;
+        }
         var sql = 'INSERT INTO customer (name, address, email, dateOfBirth, gender,age , cardHolderName,cardNumber , expiryDate, cvv,timeStamp) VALUES (?,?,?,?,?,?,?,?,?,?,?)'
         var params = [name, address, email, dateOfBirth, gender, age, cardHolderName, cardNumber, expiryDate, cvv,timeStamp]
         db.run(sql, params, function (err, result) {
