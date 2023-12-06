@@ -28,6 +28,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             if (err) {
                 console.log('Something Error')
             } else {
+                // Table just created, creating some rows
             
             }
         })
