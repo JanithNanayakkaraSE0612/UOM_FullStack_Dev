@@ -49,10 +49,10 @@ app.post("/api/customer/register/", (req, res, next) => {
             res.status(400).send("Invalid Email Address");
             return;
         }
-        if(creditCardRegEx.test(cardNumber)!=true){
-            res.status(400).send("Invalid Card Number");
-            return;
-        }
+        // if(creditCardRegEx.test(cardNumber)!=true){
+        //     res.status(400).send("Invalid Card Number");
+        //     return;
+        // }
         var sql = 'INSERT INTO customer (name, address, email, dateOfBirth, gender,age , cardHolderName,cardNumber , expiryDate, cvv,timeStamp) VALUES (?,?,?,?,?,?,?,?,?,?,?)'
         var params = [name, address, email, dateOfBirth, gender, age, cardHolderName, cardNumber, expiryDate, cvv,timeStamp]
         db.run(sql, params, function (err, result) {
